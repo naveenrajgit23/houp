@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Houp - Work Update Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #F8F9FA;
+        }
+
+        .login-screen {
+            background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-emoji {
+            font-size: 60px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2C3E50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .login-subtitle {
+            font-size: 14px;
+            color: #7F8C8D;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #E0E0E0;
+            border-radius: 12px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: #4A90E2;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 16px;
+            background: #4A90E2;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .login-button:hover {
+            background: #357ABD;
+        }
+
+        .welcome {
+            background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .emoji {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .main-screen,
+        .settings-screen {
+            display: none;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 100px;
+        }
+
+        .header {
+            background: #4A90E2;
+            padding: 40px 30px;
+            border-radius: 16px 16px 0 0;
+            color: white;
+        }
+
+        .header-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .header-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .form {
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #2C3E50;
+            margin-bottom: 8px;
+        }
+
+        .input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .input:focus {
+            outline: none;
+            border-color: #4A90E2;
+        }
+
+        textarea.input {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .image-button {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            color: #4A90E2;
+            border: 1px dashed #E0E0E0;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .image-button:hover {
+            border-color: #4A90E2;
+            background: #F0F7FF;
+        }
+
+        .save-button {
+            width: 100%;
+            padding: 16px;
+            background: #50C878;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(80, 200, 120, 0.3);
+        }
+
+        .save-button:hover {
+            background: #45B368;
+        }
+
+        .success-message {
+            display: none;
+            background: #50C878;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .info-box {
+            background: #FFF3CD;
+            border: 1px solid #FFE69C;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #E0E0E0;
+            display: none;
+            justify-content: space-around;
+            padding: 10px 0 20px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 8px 20px;
+            color: #7F8C8D;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            color: #4A90E2;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-screen" id="loginScreen">
+        <div class="login-box">
+            <div class="login-emoji">👋</div>
+            <div class="login-title">Welcome to Houp!</div>
+            <div class="login-subtitle">Let's get started by knowing your name</div>
+            <input type="text" class="login-input" id="loginName" placeholder="Enter your name" autofocus>
+            <button class="login-button" onclick="handleLogin()">Get Started 🚀</button>
+        </div>
+    </div>
+
+    <div class="welcome" id="welcomeScreen" style="display: none;">
+        <div class="emoji">📝</div>
+        <div class="title">Welcome to Houp</div>
+        <div class="subtitle">Track your work updates effortlessly</div>
+    </div>
+
+    <div class="main-screen" id="mainScreen">
+        <div class="header">
+            <div class="header-title">Work Update</div>
+            <div class="header-subtitle" id="headerGreeting">Record your progress</div>
+        </div>
+
+        <div class="form">
+            <div class="info-box">
+                ⚠️ Demo version. Full mobile app includes Google Sheets sync & notifications.
+            </div>
+
+            <div class="input-group">
+                <label class="label">Work Update</label>
+                <textarea class="input" id="workUpdate" placeholder="What have you been working on?"></textarea>
+            </div>
+
+            <div class="input-group">
+                <label class="label">Time</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" class="input" id="time" placeholder="HH:MM AM/PM" style="flex: 1;">
+                    <button type="button" onclick="updateTime()"
+                        style="padding: 12px 20px; background: #4A90E2; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                        🕐 Now
+                    </button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label class="label">Image (Optional)</label>
+                <input type="file" id="imageInput" accept="image/*" style="display: none;"
+                    onchange="handleImageSelect(event)">
+                <button type="button" class="image-button" onclick="document.getElementById('imageInput').click()">
+                    📷 <span id="imageButtonText">Add Image</span>
+                </button>
+                <div id="imagePreview" style="display: none; margin-top: 15px;">
+                    <img id="previewImg" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px;">
+                </div>
+            </div>
+
+            <button class="save-button" onclick="saveUpdate()">💾 Save Update</button>
+
+            <div class="success-message" id="successMessage">
+                ✅ Update saved successfully!
+            </div>
+        </div>
+    </div>
+
+    <div class="settings-screen" id="settingsScreen">
+        <div class="header">
+            <div class="header-title">Settings</div>
+            <div class="header-subtitle">Configure your Houp app</div>
+        </div>
+
+        <div class="form">
+            <div class="info-box">
+                ℹ️ Browser demo. Full mobile app includes more features.
+            </div>
+
+            <div class="input-group">
+                <label class="label">👤 Logged in as</label>
+                <input type="text" class="input" id="settingsUserName" readonly style="background: #F8F9FA;">
+                <button class="save-button" style="background: #4A90E2; margin-top: 10px;" onclick="changeName()">✏️
+                    Change Name</button>
+            </div>
+
+            <div class="input-group">
+                <label class="label">📊 Google Sheet URL</label>
+                <input type="text" class="input" id="googleSheetUrl"
+                    placeholder="Paste your Google Apps Script Web App URL here">
+                <button class="save-button" style="background: #4A90E2; margin-top: 10px;"
+                    onclick="saveGoogleSheetUrl()">💾 Save URL</button>
+                <p style="font-size: 12px; color: #7F8C8D; margin-top: 8px;">
+                    ℹ️ See GOOGLE_SHEETS_SCRIPT.md for setup instructions
+                </p>
+            </div>
+
+            <div class="input-group">
+                <label class="label">ℹ️ About</label>
+                <p style="font-size: 14px; color: #2C3E50; margin-bottom: 5px;"><strong>App:</strong> Houp v1.0.0</p>
+                <p style="font-size: 14px; color: #2C3E50; margin-bottom: 5px;"><strong>Developer:</strong> Naveenraj
+                </p>
+            </div>
+
+            <div class="input-group">
+                <button class="save-button" style="background: #E74C3C;" onclick="handleLogout()">🚪 Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-nav" id="bottomNav">
+        <div class="nav-item active" onclick="showScreen('main')">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label">Home</div>
+        </div>
+        <div class="nav-item" onclick="viewSavedUpdates()">
+            <div class="nav-icon">📊</div>
+            <div class="nav-label">Sheet</div>
+        </div>
+        <div class="nav-item" onclick="showScreen('settings')">
+            <div class="nav-icon">⚙️</div>
+            <div class="nav-label">Settings</div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            const savedName = localStorage.getItem('houp_userName');
+            if (savedName) {
+                document.getElementById('loginScreen').style.display = 'none';
+                showWelcomeScreen();
+            }
+        });
+
+        function handleLogin() {
+            const name = document.getElementById('loginName').value.trim();
+            if (!name) {
+                alert('Please enter your name');
+                return;
+            }
+            localStorage.setItem('houp_userName', name);
+            document.getElementById('loginScreen').style.display = 'none';
+            showWelcomeScreen();
+        }
+
+        function showWelcomeScreen() {
+            document.getElementById('welcomeScreen').style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('welcomeScreen').style.display = 'none';
+                document.getElementById('mainScreen').style.display = 'block';
+                document.getElementById('bottomNav').style.display = 'flex';
+                // Update greeting
+                const userName = localStorage.getItem('houp_userName');
+                if (userName) {
+                    document.getElementById('headerGreeting').textContent = 'Hi ' + userName + ' 👋';
+                }
+            }, 2000);
+        }
+
+        function showScreen(screen) {
+            document.getElementById('mainScreen').style.display = 'none';
+            document.getElementById('settingsScreen').style.display = 'none';
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+            if (screen === 'main') {
+                document.getElementById('mainScreen').style.display = 'block';
+                document.querySelectorAll('.nav-item')[0].classList.add('active');
+            } else if (screen === 'settings') {
+                document.getElementById('settingsScreen').style.display = 'block';
+                document.querySelectorAll('.nav-item')[2].classList.add('active');
+                document.getElementById('settingsUserName').value = localStorage.getItem('houp_userName');
+                // Load saved Google Sheet URL
+                const savedUrl = localStorage.getItem('houp_googleSheetUrl');
+                if (savedUrl) {
+                    document.getElementById('googleSheetUrl').value = savedUrl;
+                }
+            }
+        }
+
+        function changeName() {
+            const newName = prompt('Enter your new name:');
+            if (newName && newName.trim()) {
+                localStorage.setItem('houp_userName', newName.trim());
+                document.getElementById('settingsUserName').value = newName.trim();
+                alert('✅ Name changed successfully!');
+            }
+        }
+
+        function saveGoogleSheetUrl() {
+            const url = document.getElementById('googleSheetUrl').value.trim();
+            if (!url) {
+                alert('Please enter a Google Sheet URL');
+                return;
+            }
+            if (!url.includes('script.google.com')) {
+                alert('⚠️ Please enter a valid Google Apps Script Web App URL\n\nIt should look like:\nhttps://script.google.com/macros/s/.../exec');
+                return;
+            }
+            localStorage.setItem('houp_googleSheetUrl', url);
+            alert('✅ Google Sheet URL saved successfully!\n\nYour updates will now sync to Google Sheets.');
+        }
+
+        function handleLogout() {
+            if (confirm('Logout and change user?')) {
+                localStorage.removeItem('houp_userName');
+                location.reload();
+            }
+        }
+
+        function viewSavedUpdates() {
+            const updates = JSON.parse(localStorage.getItem('houp_updates') || '[]');
+            if (updates.length === 0) {
+                alert('📊 No updates saved yet!\n\nStart recording your work updates.');
+                return;
+            }
+            let message = '📊 Your Saved Updates (' + updates.length + ' total)\n\n';
+            updates.slice(-10).reverse().forEach(update => {
+                message += '━━━━━━━━━━━━━━━━━━━━\n';
+                message += '📅 ' + update.date + ' (' + update.day + ')\n';
+                message += '⏰ ' + update.time + '\n';
+                message += '👤 ' + update.userName + '\n';
+                message += '📝 ' + update.workUpdate + '\n\n';
+            });
+            alert(message);
+        }
+
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const displayHours = hours % 12 || 12;
+            const nextHour = (hours + 1) % 24;
+            const nextAmPm = nextHour >= 12 ? 'PM' : 'AM';
+            const displayNextHour = nextHour % 12 || 12;
+            document.getElementById('time').value = displayHours + ':00 ' + ampm + ' - ' + displayNextHour + ':00 ' + nextAmPm;
+        }
+
+        let selectedImageData = null;
+        function handleImageSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    selectedImageData = e.target.result;
+                    document.getElementById('previewImg').src = selectedImageData;
+                    document.getElementById('imagePreview').style.display = 'block';
+                    document.getElementById('imageButtonText').textContent = 'Change Image';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function saveUpdate() {
+            const userName = localStorage.getItem('houp_userName');
+            const workUpdate = document.getElementById('workUpdate').value.trim();
+            const time = document.getElementById('time').value;
+
+            if (!workUpdate) {
+                alert('Please enter your work update');
+                return;
+            }
+
+            const now = new Date();
+            const update = {
+                date: now.toLocaleDateString('en-IN'),
+                day: now.toLocaleDateString('en-IN', { weekday: 'long' }),
+                time,
+                userName,
+                workUpdate,
+                imageData: selectedImageData || null,
+                timestamp: now.toISOString()
+            };
+
+            let updates = JSON.parse(localStorage.getItem('houp_updates') || '[]');
+            updates.push(update);
+            localStorage.setItem('houp_updates', JSON.stringify(updates));
+
+            // Try to sync to Google Sheets
+            const googleSheetUrl = localStorage.getItem('houp_googleSheetUrl');
+            if (googleSheetUrl) {
+                syncToGoogleSheets(update, googleSheetUrl);
+            }
+
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('workUpdate').value = '';
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('imageInput').value = '';
+            document.getElementById('imageButtonText').textContent = 'Add Image';
+            selectedImageData = null;
+
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 3000);
+        }
+
+        function syncToGoogleSheets(update, url) {
+            fetch(url, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    date: update.date,
+                    day: update.day,
+                    time: update.time,
+                    userName: update.userName,
+                    workUpdate: update.workUpdate,
+                    imageUrl: update.imageData || ''
+                })
+            }).then(() => {
+                console.log('✅ Synced to Google Sheets');
+            }).catch(err => {
+                console.log('⚠️ Google Sheets sync failed (saved locally):', err);
+            });
+        }
+    </script>
+</body>
+
+</html>
