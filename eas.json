@@ -11,6 +11,10 @@
             "distribution": "internal",
             "android": {
                 "buildType": "apk"
+            },
+            "autoIncrement": true,
+            "env": {
+                "EXPO_NO_DOCTOR": "1"
             }
         },
         "production": {
