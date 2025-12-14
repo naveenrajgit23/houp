@@ -29,7 +29,8 @@
         "android.permission.READ_EXTERNAL_STORAGE",
         "android.permission.WRITE_EXTERNAL_STORAGE",
         "android.permission.SCHEDULE_EXACT_ALARM",
-        "android.permission.POST_NOTIFICATIONS"
+        "android.permission.POST_NOTIFICATIONS",
+        "android.permission.RECORD_AUDIO"
       ]
     },
     "web": {
@@ -39,7 +40,6 @@
       [
         "expo-notifications",
         {
-          "icon": "./assets/notification-icon.png",
           "color": "#4A90E2"
         }
       ],
@@ -51,7 +51,9 @@
       ]
     ],
     "extra": {
-      "eas": {}
+      "eas": {
+        "projectId": "64f4b487-ea2d-4461-a332-7da621371ad7"
+      }
     }
   }
 }
