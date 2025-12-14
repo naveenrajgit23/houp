@@ -10,7 +10,7 @@ export default function WelcomeScreen({ navigation }: WelcomeScreenProps) {
     useEffect(() => {
         // Auto-navigate to main screen after 2 seconds
         const timer = setTimeout(() => {
-            navigation.replace('Main');
+            navigation.replace('MainApp');
         }, 2000);
 
         return () => clearTimeout(timer);
