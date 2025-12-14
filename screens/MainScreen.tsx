@@ -36,12 +36,23 @@ export default function MainScreen() {
 
     const updateTime = () => {
         const now = new Date();
-        const hours = now.getHours();
-        const minutes = now.getMinutes();
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        const displayHours = hours % 12 || 12;
-        const displayMinutes = minutes < 10 ? `0${minutes}` : minutes;
-        setTime(`${displayHours}:${displayMinutes} ${ampm}`);
+        const currentHour = now.getHours();
+        const nextHour = (currentHour + 1) % 24;
+
+        const formatHour = (hour: number) => {
+            const period = hour >= 12 ? 'PM' : 'AM';
+            const displayHour = hour % 12 || 12;
+            return `${displayHour}:00 ${period}`;
+        };
+
+        setTime(`${formatHour(currentHour)} - ${formatHour(nextHour)}`);
+    };
+
+    const handleTakePhoto = async () => {
+        const uri = await imageUpload.takePhoto();
+        if (uri) {
+            setImageUri(uri);
+        }
     };
 
     const handlePickImage = async () => {
@@ -206,11 +217,14 @@ export default function MainScreen() {
                 {/* Image Upload */}
                 <View style={styles.inputGroup}>
                     <Text style={styles.label}>Image (Optional)</Text>
-                    <TouchableOpacity style={styles.imageButton} onPress={handlePickImage}>
-                        <Text style={styles.imageButtonText}>
-                            {imageUri ? '📷 Change Image' : '📷 Add Image'}
-                        </Text>
-                    </TouchableOpacity>
+                    <View style={styles.imageButtonsRow}>
+                        <TouchableOpacity style={styles.imageButton} onPress={handleTakePhoto}>
+                            <Text style={styles.imageButtonText}>📷 Camera</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.imageButton} onPress={handlePickImage}>
+                            <Text style={styles.imageButtonText}>🖼️ Gallery</Text>
+                        </TouchableOpacity>
+                    </View>
                     {imageUri && (
                         <Image source={{ uri: imageUri }} style={styles.imagePreview} />
                     )}
@@ -283,7 +297,12 @@ const styles = StyleSheet.create({
         minHeight: 100,
         paddingTop: theme.spacing.md,
     },
+    imageButtonsRow: {
+        flexDirection: 'row',
+        gap: theme.spacing.md,
+    },
     imageButton: {
+        flex: 1,
         backgroundColor: theme.colors.surface,
         borderRadius: theme.borderRadius.md,
         padding: theme.spacing.md,

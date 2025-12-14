@@ -19,6 +19,7 @@ export default function SettingsScreen() {
     const [googleSheetUrl, setGoogleSheetUrl] = useState('');
     const [notificationsEnabled, setNotificationsEnabled] = useState(true);
     const [scheduledCount, setScheduledCount] = useState(0);
+    const [showInstructions, setShowInstructions] = useState(false);
 
     useEffect(() => {
         loadSettings();
@@ -138,6 +139,51 @@ export default function SettingsScreen() {
                     <TouchableOpacity style={styles.linkButton} onPress={handleOpenSheet}>
                         <Text style={styles.linkButtonText}>📄 View My Sheet</Text>
                     </TouchableOpacity>
+
+                    {/* Setup Instructions */}
+                    <TouchableOpacity
+                        style={styles.instructionsToggle}
+                        onPress={() => setShowInstructions(!showInstructions)}
+                    >
+                        <Text style={styles.instructionsToggleText}>
+                            📖 How to Setup Google Sheets {showInstructions ? '▼' : '▶'}
+                        </Text>
+                    </TouchableOpacity>
+
+                    {showInstructions && (
+                        <View style={styles.instructionsContent}>
+                            <Text style={styles.instructionStep}>
+                                <Text style={styles.stepNumber}>1.</Text> Create a new Google Sheet
+                            </Text>
+                            <Text style={styles.instructionStep}>
+                                <Text style={styles.stepNumber}>2.</Text> Add headers: Date | Day | Time | Name | Work Update | Image URL
+                            </Text>
+                            <Text style={styles.instructionStep}>
+                                <Text style={styles.stepNumber}>3.</Text> Go to Extensions → Apps Script
+                            </Text>
+                            <Text style={styles.instructionStep}>
+                                <Text style={styles.stepNumber}>4.</Text> Delete default code and paste the HOUP script
+                            </Text>
+                            <Text style={styles.instructionStep}>
+                                <Text style={styles.stepNumber}>5.</Text> Click Deploy → New deployment
+                            </Text>
+                            <Text style={styles.instructionStep}>
+                                <Text style={styles.stepNumber}>6.</Text> Select "Web app" type
+                            </Text>
+                            <Text style={styles.instructionStep}>
+                                <Text style={styles.stepNumber}>7.</Text> Set "Who has access" to "Anyone"
+                            </Text>
+                            <Text style={styles.instructionStep}>
+                                <Text style={styles.stepNumber}>8.</Text> Click "Deploy" and copy the Web App URL
+                            </Text>
+                            <Text style={styles.instructionStep}>
+                                <Text style={styles.stepNumber}>9.</Text> Paste the URL above and click "Save URL"
+                            </Text>
+                            <Text style={styles.instructionNote}>
+                                💡 Note: You can also paste your Google Sheets viewing URL (docs.google.com/spreadsheets/...)
+                            </Text>
+                        </View>
+                    )}
                 </View>
 
                 {/* Notifications Section */}
@@ -323,5 +369,41 @@ const styles = StyleSheet.create({
         color: theme.colors.textSecondary,
         marginTop: theme.spacing.sm,
         lineHeight: 20,
+    },
+    instructionsToggle: {
+        marginTop: theme.spacing.md,
+        padding: theme.spacing.sm,
+        backgroundColor: theme.colors.background,
+        borderRadius: theme.borderRadius.md,
+        borderWidth: 1,
+        borderColor: theme.colors.border,
+    },
+    instructionsToggleText: {
+        fontSize: theme.fontSize.sm,
+        color: theme.colors.primary,
+        fontWeight: theme.fontWeight.semibold,
+    },
+    instructionsContent: {
+        marginTop: theme.spacing.md,
+        padding: theme.spacing.md,
+        backgroundColor: theme.colors.background,
+        borderRadius: theme.borderRadius.md,
+        gap: theme.spacing.sm,
+    },
+    instructionStep: {
+        fontSize: theme.fontSize.sm,
+        color: theme.colors.text,
+        lineHeight: 20,
+    },
+    stepNumber: {
+        fontWeight: theme.fontWeight.bold,
+        color: theme.colors.primary,
+    },
+    instructionNote: {
+        fontSize: theme.fontSize.xs,
+        color: theme.colors.textSecondary,
+        fontStyle: 'italic',
+        marginTop: theme.spacing.sm,
+        lineHeight: 18,
     },
 });

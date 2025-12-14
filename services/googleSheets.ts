@@ -51,7 +51,8 @@ export const googleSheets = {
     },
 
     validateUrl(url: string): boolean {
-        // Check if URL is a Google Apps Script Web App URL
-        return url.includes('script.google.com') && url.includes('/exec');
+        // Check if URL is a Google Apps Script Web App URL or Google Sheets viewing URL
+        return (url.includes('script.google.com') && url.includes('/exec')) ||
+            url.includes('docs.google.com/spreadsheets');
     },
 };
