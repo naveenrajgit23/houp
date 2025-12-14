@@ -50,22 +50,24 @@ export const notifications = {
             await Notifications.cancelAllScheduledNotificationsAsync();
 
             // Schedule notifications every 90 minutes between 9 AM and 7 PM
-            const startHour = 9; // 9 AM
-            const endHour = 19; // 7 PM
+            // NOTE: Times are in LOCAL DEVICE TIME (automatically uses device timezone)
+            const startHour = 9; // 9 AM local time
+            const endHour = 19; // 7 PM local time
             const intervalMinutes = 90;
 
             // Schedule repeating notifications for each time slot
             const timeSlots = [
-                { hour: 9, minute: 0 },   // 9:00 AM
-                { hour: 10, minute: 30 }, // 10:30 AM
-                { hour: 12, minute: 0 },  // 12:00 PM
-                { hour: 13, minute: 30 }, // 1:30 PM
-                { hour: 15, minute: 0 },  // 3:00 PM
-                { hour: 16, minute: 30 }, // 4:30 PM
-                { hour: 18, minute: 0 },  // 6:00 PM
+                { hour: 9, minute: 0 },   // 9:00 AM local time
+                { hour: 10, minute: 30 }, // 10:30 AM local time
+                { hour: 12, minute: 0 },  // 12:00 PM local time
+                { hour: 13, minute: 30 }, // 1:30 PM local time
+                { hour: 15, minute: 0 },  // 3:00 PM local time
+                { hour: 16, minute: 30 }, // 4:30 PM local time
+                { hour: 18, minute: 0 },  // 6:00 PM local time
             ];
 
             // Schedule daily repeating notifications for each time slot
+            // Calendar trigger automatically uses device's local timezone
             for (const slot of timeSlots) {
                 await Notifications.scheduleNotificationAsync({
                     content: {
@@ -85,7 +87,7 @@ export const notifications = {
                 });
             }
 
-            console.log(`Scheduled ${timeSlots.length} daily repeating notifications`);
+            console.log(`Scheduled ${timeSlots.length} daily repeating notifications (local time)`);
         } catch (error) {
             console.error('Error scheduling notifications:', error);
         }

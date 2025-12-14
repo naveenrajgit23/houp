@@ -32,7 +32,7 @@
         "android.permission.POST_NOTIFICATIONS",
         "android.permission.RECORD_AUDIO"
       ],
-      "versionCode": 4
+      "versionCode": 5
     },
     "web": {
       "favicon": "./assets/favicon.png"
