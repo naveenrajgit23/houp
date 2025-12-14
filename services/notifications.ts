@@ -54,54 +54,38 @@ export const notifications = {
             const endHour = 19; // 7 PM
             const intervalMinutes = 90;
 
-            // Calculate notification times
-            const times: Date[] = [];
-            const now = new Date();
+            // Schedule repeating notifications for each time slot
+            const timeSlots = [
+                { hour: 9, minute: 0 },   // 9:00 AM
+                { hour: 10, minute: 30 }, // 10:30 AM
+                { hour: 12, minute: 0 },  // 12:00 PM
+                { hour: 13, minute: 30 }, // 1:30 PM
+                { hour: 15, minute: 0 },  // 3:00 PM
+                { hour: 16, minute: 30 }, // 4:30 PM
+                { hour: 18, minute: 0 },  // 6:00 PM
+            ];
 
-            // Start from 9 AM today
-            let currentTime = new Date();
-            currentTime.setHours(startHour, 0, 0, 0);
-
-            // Generate times for today
-            while (currentTime.getHours() < endHour) {
-                if (currentTime > now) {
-                    times.push(new Date(currentTime));
-                }
-                currentTime = new Date(currentTime.getTime() + intervalMinutes * 60 * 1000);
-            }
-
-            // Schedule notifications
-            for (const time of times) {
+            // Schedule daily repeating notifications for each time slot
+            for (const slot of timeSlots) {
                 await Notifications.scheduleNotificationAsync({
                     content: {
-                        title: '⏰ Time for your work update!',
-                        body: 'Record what you\'ve been working on in Houp',
+                        title: slot.hour === 9 ? '🌅 Good morning!' : '⏰ Time for your work update!',
+                        body: slot.hour === 9
+                            ? 'Start tracking your work updates with Houp'
+                            : 'Record what you\'ve been working on in Houp',
                         sound: true,
                         priority: Notifications.AndroidNotificationPriority.HIGH,
                     },
                     trigger: {
-                        type: 'date' as const,
-                        date: time,
+                        type: 'calendar' as const,
+                        hour: slot.hour,
+                        minute: slot.minute,
+                        repeats: true,
                     },
                 });
             }
 
-            // Schedule daily repeating notification at 9 AM
-            await Notifications.scheduleNotificationAsync({
-                content: {
-                    title: '🌅 Good morning!',
-                    body: 'Start tracking your work updates with Houp',
-                    sound: true,
-                },
-                trigger: {
-                    type: 'calendar' as const,
-                    hour: startHour,
-                    minute: 0,
-                    repeats: true,
-                },
-            });
-
-            console.log(`Scheduled ${times.length} notifications for today`);
+            console.log(`Scheduled ${timeSlots.length} daily repeating notifications`);
         } catch (error) {
             console.error('Error scheduling notifications:', error);
         }

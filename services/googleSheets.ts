@@ -4,7 +4,7 @@ export interface WorkUpdate {
     date: string;
     day: string;
     time: string;
-    userName: string;
+    userName?: string; // Optional - not collected anymore
     workUpdate: string;
     imageUrl?: string;
 }

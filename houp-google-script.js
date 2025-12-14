@@ -4,7 +4,7 @@
 // 
 // INSTRUCTIONS:
 // 1. Open your Google Sheet
-// 2. Click Extensions → Apps Script
+// 2. Add headers in Row 1: Date | Day | Time | Work Update | Image URL
 // 3. Delete any existing code
 // 4. Copy and paste this ENTIRE file
 // 5. Click Save (💾)
@@ -31,9 +31,8 @@ function doPost(e) {
             data.date,        // Column A: Date
             data.day,         // Column B: Day of week
             data.time,        // Column C: Time
-            data.userName,    // Column D: User name
-            data.workUpdate,  // Column E: Work update text
-            data.imageUrl || ''  // Column F: Image URL (if any)
+            data.workUpdate,  // Column D: Work update text
+            data.imageUrl || ''  // Column E: Image URL (if any)
         ]);
 
         // Return success response to Houp app

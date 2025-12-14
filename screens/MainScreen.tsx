@@ -64,11 +64,6 @@ export default function MainScreen() {
 
     const handleSave = async () => {
         // Validation
-        if (!userName.trim()) {
-            Alert.alert('Missing Information', 'Please enter your name');
-            return;
-        }
-
         if (!workUpdate.trim()) {
             Alert.alert('Missing Information', 'Please enter your work update');
             return;
@@ -77,9 +72,6 @@ export default function MainScreen() {
         setLoading(true);
 
         try {
-            // Save user name for future use
-            await storage.setUserName(userName);
-
             // Get current date and day
             const now = new Date();
             const date = now.toLocaleDateString('en-IN', {
@@ -112,7 +104,6 @@ export default function MainScreen() {
                                     date,
                                     day,
                                     time,
-                                    userName,
                                     workUpdate,
                                     imageUrl,
                                 });
@@ -124,12 +115,11 @@ export default function MainScreen() {
                 return;
             }
 
-            // Save to Google Sheets
+            // Save to Google Sheets (without userName)
             await googleSheets.saveUpdate(sheetUrl, {
                 date,
                 day,
                 time,
-                userName,
                 workUpdate,
                 imageUrl,
             });
@@ -152,7 +142,6 @@ export default function MainScreen() {
                 date,
                 day,
                 time,
-                userName,
                 workUpdate,
                 imageUrl: imageUri || '',
             });
@@ -170,23 +159,12 @@ export default function MainScreen() {
     return (
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
             <View style={styles.header}>
+                <Text style={styles.greeting}>Hi {userName || 'there'}! 👋</Text>
                 <Text style={styles.headerTitle}>Work Update</Text>
                 <Text style={styles.headerSubtitle}>Record your progress</Text>
             </View>
 
             <View style={styles.form}>
-                {/* User Name Input */}
-                <View style={styles.inputGroup}>
-                    <Text style={styles.label}>Your Name</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Enter your name"
-                        value={userName}
-                        onChangeText={setUserName}
-                        placeholderTextColor={theme.colors.textSecondary}
-                    />
-                </View>
-
                 {/* Work Update Input */}
                 <View style={styles.inputGroup}>
                     <Text style={styles.label}>Work Update</Text>
@@ -259,6 +237,12 @@ const styles = StyleSheet.create({
         backgroundColor: theme.colors.primary,
         padding: theme.spacing.xl,
         paddingTop: theme.spacing.xxl + 20,
+    },
+    greeting: {
+        fontSize: theme.fontSize.lg,
+        fontWeight: theme.fontWeight.semibold,
+        color: '#FFFFFF',
+        marginBottom: theme.spacing.sm,
     },
     headerTitle: {
         fontSize: theme.fontSize.xxl,
