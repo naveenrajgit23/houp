@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import { View } from 'react-native';
+import { View, ActivityIndicator, StyleSheet, Image } from 'react-native';
 import LoginScreen from './screens/LoginScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import MainScreen from './screens/MainScreen';
@@ -42,30 +42,55 @@ export default function App() {
     }, []);
 
     const initializeApp = async () => {
-        // Check if user has a saved name
-        const userName = await storage.getUserName();
+        try {
+            console.log('🚀 Initializing app...');
 
-        // Set initial route based on whether user name exists
-        if (userName) {
-            setInitialRoute('Welcome');
-        } else {
-            setInitialRoute('Login');
-        }
+            // Check if user has a saved name
+            const userName = await storage.getUserName();
+            console.log('👤 User name:', userName || 'Not set');
 
-        // Request notification permissions on app start
-        const notificationsEnabled = await storage.getNotificationsEnabled();
-        if (notificationsEnabled) {
-            const hasPermission = await notifications.requestPermissions();
-            if (hasPermission) {
-                await notifications.scheduleReminders();
+            // Set initial route based on whether user name exists
+            if (userName) {
+                setInitialRoute('Welcome');
+                console.log('📍 Route: Welcome');
+            } else {
+                setInitialRoute('Login');
+                console.log('📍 Route: Login');
             }
-        }
 
-        setIsReady(true);
+            // Request notification permissions on app start
+            const notificationsEnabled = await storage.getNotificationsEnabled();
+            console.log('🔔 Notifications enabled:', notificationsEnabled);
+
+            if (notificationsEnabled) {
+                const hasPermission = await notifications.requestPermissions();
+                console.log('✅ Permission granted:', hasPermission);
+                if (hasPermission) {
+                    await notifications.scheduleReminders();
+                    console.log('⏰ Reminders scheduled');
+                }
+            }
+
+            console.log('✅ App initialized successfully');
+            setIsReady(true);
+        } catch (error) {
+            console.error('❌ Error initializing app:', error);
+            // Set ready anyway to prevent infinite loading
+            setIsReady(true);
+        }
     };
 
     if (!isReady) {
-        return null; // Or a loading screen
+        return (
+            <View style={styles.loadingContainer}>
+                <StatusBar style="light" />
+                <Image
+                    source={require('./assets/icon.png')}
+                    style={styles.loadingLogo}
+                />
+                <ActivityIndicator size="large" color="#4A90E2" style={styles.loadingIndicator} />
+            </View>
+        );
     }
 
     return (
@@ -84,3 +109,21 @@ export default function App() {
         </NavigationContainer>
     );
 }
+
+const styles = StyleSheet.create({
+    loadingContainer: {
+        flex: 1,
+        backgroundColor: '#4A90E2',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    loadingLogo: {
+        width: 120,
+        height: 120,
+        marginBottom: 20,
+    },
+    loadingIndicator: {
+        marginTop: 20,
+    },
+});
+

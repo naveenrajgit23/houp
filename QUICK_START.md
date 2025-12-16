@@ -1,177 +1,105 @@
-# 📄 HOUP - Quick Start Guide
+# 🎉 HOUP App - Quick Start Guide
 
-## Welcome to Houp! 🎉
-**Your Simple Work Update Tracker**
+## ✅ Your App is Ready!
 
----
-
-## ⚡ 5-Minute Setup
-
-### STEP 1: Install App
-1. Download **Houp.apk**
-2. Tap to install
-3. Enable "Install from unknown sources" if asked
-4. Open Houp
-
-### STEP 2: Enter Your Name
-1. Type your name
-2. Tap "Get Started"
-3. Allow notifications
-
-### STEP 3: Setup Google Sheet
-
-#### A. Create Sheet
-1. Go to **sheets.google.com**
-2. Create new blank sheet
-3. Name it: **"Houp Work Updates"**
-4. Add headers in Row 1:
-
-```
-Date | Day | Time | Name | Work Update | Image URL
-```
-
-#### B. Add Script
-1. Click **Extensions** → **Apps Script**
-2. Delete existing code
-3. Paste this code:
-
-```javascript
-function doPost(e) {
-  try {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    var data = JSON.parse(e.postData.contents);
-    
-    sheet.appendRow([
-      data.date,
-      data.day,
-      data.time,
-      data.userName,
-      data.workUpdate,
-      data.imageUrl || ''
-    ]);
-    
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: 'success' }))
-      .setMimeType(ContentService.MimeType.JSON);
-      
-  } catch (error) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ 
-        status: 'error', 
-        message: error.toString() 
-      }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}
-```
-
-4. Click **Save**
-
-#### C. Deploy
-1. Click **Deploy** → **New deployment**
-2. Choose **Web app**
-3. Set:
-   - Execute as: **Me**
-   - Who has access: **Anyone**
-4. Click **Deploy**
-5. Click **Authorize** → **Allow**
-6. **COPY the Web App URL**
-
-#### D. Connect to App
-1. Open Houp → **Settings**
-2. Paste URL in "Google Sheet URL"
-3. Tap **Save URL**
-
-### STEP 4: Test It! ✅
-1. Go to **Home**
-2. Enter a work update
-3. Tap **Save**
-4. Check your Google Sheet - data appears!
+Everything is complete! Here's what you need to know:
 
 ---
 
-## 🎯 Daily Usage
+## 📥 Download Your APK
 
-```
-Open Houp → Enter Update → Save → Done!
-```
+**Go to:** https://expo.dev/accounts/naveenrajma/projects/houp/builds
 
-**That's it! Your updates save automatically to Google Sheets.**
-
----
-
-## 🔔 Notifications
-
-Get reminders every 90 minutes:
-- **9:00 AM** - Good morning!
-- **10:30 AM** - Time for update
-- **12:00 PM** - Time for update
-- **1:30 PM** - Time for update
-- **3:00 PM** - Time for update
-- **4:30 PM** - Time for update
-- **6:00 PM** - Time for update
-
-Stops at 7:00 PM
+1. Click on your latest build
+2. Click **Download** button
+3. Save the APK file
 
 ---
 
-## ❓ Troubleshooting
+## 📱 Install on Your Phone
 
-**Data not saving?**
-- Check URL ends with `/exec`
-- Verify script deployed as "Anyone"
-- Check sheet has correct headers
-
-**No notifications?**
-- Go to Settings
-- Toggle "Enable Reminders" ON
-- Allow permission
-
-**Can't install APK?**
-- Settings → Security
-- Enable "Install from unknown sources"
+1. Transfer APK to your phone
+2. Open the APK file
+3. Allow "Install from unknown sources"
+4. Tap **Install**
+5. Open HOUP app
 
 ---
 
-## 📊 Features
+## ⚙️ First-Time Setup
 
-✅ Simple work updates
-✅ Auto Google Sheets sync
-✅ 90-minute reminders
-✅ Image upload support
-✅ Offline caching
-✅ View saved updates
-✅ Clean, minimal design
+1. **Enter your name** on welcome screen
+2. **Enable notifications** when prompted
+3. Go to **Settings** tab
+4. Toggle **"Enable Reminders"** ON
+5. Tap **"Test Notification"** to verify
 
 ---
 
-## 🔒 Privacy
+## 🔔 Notification Schedule
 
-- Your data = Your Google Sheet
-- No central server
-- Completely private
-- Only you have access
-
----
-
-## 📞 Support
-
-Need help? Contact: **Naveenraj**
+You'll receive reminders at:
+- 9:00 AM - Good morning!
+- 10:30 AM - Work update
+- 12:00 PM - Work update
+- 1:30 PM - Work update
+- 3:00 PM - Work update
+- 4:30 PM - Work update
+- 6:00 PM - Work update
 
 ---
 
-**Developed by Naveenraj | Version 1.0.0**
+## 📊 Google Sheets Setup (Optional)
 
-**Track your work. Boost your productivity. Stay organized.**
+1. Create a Google Sheet
+2. Add headers: Date | Day | Time | Name | Work Update | Image URL
+3. Go to Extensions → Apps Script
+4. Paste the script from `houp-google-script.js`
+5. Deploy as Web App (Anyone access)
+6. Copy Web App URL
+7. Paste in HOUP Settings
+8. Tap "Save URL"
 
 ---
 
-## 📱 QR Code for Download
+## ✅ What's Fixed in Build 9
 
-[QR Code Here - Generate and insert]
-
-Scan to download Houp APK
+- ✅ **Notifications working!** (channelId added)
+- ✅ **Expo SDK 54.0.29** (latest)
+- ✅ **React 19.1.0** (latest)
+- ✅ **All dependencies updated**
 
 ---
 
-*This is a one-page quick reference guide. For detailed instructions, see FIRST_TIME_SETUP_GUIDE.md*
+## 🚀 Share with Others
+
+1. Download APK from EAS dashboard
+2. Upload to Google Drive/Dropbox
+3. Share link with users
+4. Send them this guide!
+
+---
+
+## 📄 Full Documentation
+
+Check these files for more details:
+- `FINAL_BUILD_SUMMARY.md` - Complete overview
+- `ABOUT_HOUP.md` - Full app documentation
+- `NOTIFICATION_TROUBLESHOOTING.md` - Fix notification issues
+- `COMPLETE_USER_GUIDE.md` - User manual
+
+---
+
+## 🎯 Quick Links
+
+- **Builds:** https://expo.dev/accounts/naveenrajma/projects/houp/builds
+- **Updates:** https://expo.dev/accounts/naveenrajma/projects/houp/updates
+- **Dashboard:** https://expo.dev/accounts/naveenrajma/projects/houp
+
+---
+
+## 🎊 That's It!
+
+Your HOUP app is ready to help you track productivity! 🚀
+
+**Happy Tracking!** 📝✨

@@ -2,7 +2,7 @@
   "expo": {
     "name": "Houp",
     "slug": "houp",
-    "version": "1.0.0",
+    "version": "1.0.9",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -29,10 +29,11 @@
         "android.permission.READ_EXTERNAL_STORAGE",
         "android.permission.WRITE_EXTERNAL_STORAGE",
         "android.permission.SCHEDULE_EXACT_ALARM",
+        "android.permission.USE_EXACT_ALARM",
         "android.permission.POST_NOTIFICATIONS",
         "android.permission.RECORD_AUDIO"
       ],
-      "versionCode": 5
+      "versionCode": 9
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -41,7 +42,9 @@
       [
         "expo-notifications",
         {
-          "color": "#4A90E2"
+          "icon": "./assets/icon.png",
+          "color": "#4A90E2",
+          "androidMode": "default"
         }
       ],
       [
@@ -55,6 +58,12 @@
       "eas": {
         "projectId": "64f4b487-ea2d-4461-a332-7da621371ad7"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/64f4b487-ea2d-4461-a332-7da621371ad7"
     }
   }
 }
