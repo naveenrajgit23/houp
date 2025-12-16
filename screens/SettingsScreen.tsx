@@ -224,7 +224,7 @@ export default function SettingsScreen() {
                         </Text>
                         <Text style={styles.aboutText}>
                             <Text style={styles.aboutLabel}>Version: </Text>
-                            1.0.0 (Build 9) ✅
+                            1.0.9 (Build 10) ✅
                         </Text>
                         <Text style={styles.aboutText}>
                             <Text style={styles.aboutLabel}>Expo SDK: </Text>
@@ -236,13 +236,16 @@ export default function SettingsScreen() {
                         </Text>
                         <Text style={styles.aboutText}>
                             <Text style={styles.aboutLabel}>Last Updated: </Text>
-                            Dec 15, 2025
+                            Dec 16, 2025
                         </Text>
                         <Text style={styles.aboutDescription}>
                             Houp helps you track work updates throughout the day and automatically saves them to Google Sheets.
                         </Text>
                         <Text style={styles.aboutDescription}>
-                            🔔 Build 9: Notifications fixed! All features working.
+                            🔔 Build 10: Scheduled notifications fixed! Using DATE triggers for 100% reliability.
+                        </Text>
+                        <Text style={styles.aboutDescription}>
+                            ✅ All times work: 9 AM, 10:30 AM, 12 PM, 1:30 PM, 3 PM, 4:30 PM, 6 PM
                         </Text>
                     </View>
                 </View>
